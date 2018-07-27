@@ -56,11 +56,23 @@ def getIdList(type):
     res=pd.DataFrame(res,columns=["id","name","type","typecode","location_x","location_y","adname"])
     res.to_csv('res.csv')
     return res
-    def getPOIdata():
-        pass
+def getPOIdata(poiid,day,term):
+    getData_url="http://i.amap.com/service/aoi-index?aoiids={}&end={}&offset={}&byhour=1&refresh=0".format(poiid,day,term)
+    data=json.loads(s.get(getData_url, headers=headers, cookies=cook, verify=False).text)["data"][poiid]
+    data=pd.DataFrame(data,columns=['daytime','x','y','value'])[['daytime','value']]
+    data['poiid']=poiid
+def getPoiList(conn):
+    #清除旧数据
+    conn.dopost("truncate table poi")
+    # 获取POI的id，存入数据库
+    for term in ["餐厅"]:
+        data = getIdList(term)
+        conn.write2mysql(data, 'poi')
 if __name__=='__main__':
-    conn=mysql2pd('140.143.161.111','3306','mm','root','a091211')
-    data=getIdList("餐厅")
-    conn.write2mysql(data,'poi')
+    conn = mysql2pd('140.143.161.111', '3306', 'mm', 'root', 'a091211')
+    # getPoiList(conn)
+    poi_list=conn.doget("select distinct id from poi")['POI'].values
+    for id in poi_list:
+        conn.write2mysql(getPOIdata(id),'poi_data')
     conn.close()
 

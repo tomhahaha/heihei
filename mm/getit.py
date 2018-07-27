@@ -260,6 +260,6 @@ def tecent(url,conn):
 
 if __name__=="__main__":
     url="http://www.tianqihoubao.com/aqi/beijing.html"
-    conn=mysql2pd('123.59.214.229', '33333', 'offline', 'root', 'Rtsecret')
+    conn=mysql2pd('140.143.161.111','3306','mm','root','a091211')
     tecent(url,conn)
     conn.close()
