@@ -16,6 +16,7 @@ test.config
 env/
 venv
 build/
+.idea/
 develop-eggs/
 dist/
 downloads/
