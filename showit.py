@@ -6,7 +6,7 @@ from DbCommon import mysql2pd
 
 def create_charts():
     page = Page()
-    conn=mysql2pd('123.59.214.229', '33333', 'offline', 'root', 'Rtsecret')
+    conn=mysql2pd('140.143.161.111', '3306', 'mm', 'root', 'a091211')
     data=conn.doget("select 监测点,AQI指数,`PM2.5`,PM10,Co,No2,So2,O3,updata_time from aqi")
     conn.close()
     ps=data['监测点'].drop_duplicates().values

@@ -228,14 +228,15 @@ class mysql2pd(object):
         sql="CREATE TABLE IF NOT EXISTS "+table+"("+",".join([' '.join(x) for x in pars])+")ENGINE=InnoDB DEFAULT CHARSET=utf8"
         return self.dopost(sql)
 
-    def write2mysql(self,dataframe,table):
+    def write2mysql(self,dataframe,table,show_shape=True,if_exists='append'):
         self.conn = self.pool.connection()
         self.cursor = self.conn.cursor()
         res=False
-        print(dataframe.shape)
+        if show_shape:
+            print(dataframe.shape)
         try:
             engine = create_engine("mysql+pymysql://"+self.user+":"+self.pwd+"@"+self.host+":"+self.port+"/"+self.db+"?charset=utf8")
-            dataframe.to_sql(name=table, con=engine, if_exists='append', chunksize=1000,index=False, index_label=False)
+            dataframe.to_sql(name=table, con=engine, if_exists=if_exists, chunksize=1000,index=False, index_label=False)
             res=True
         except Exception as e:
             print(e)
