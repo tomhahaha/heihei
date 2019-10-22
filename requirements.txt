@@ -17,7 +17,7 @@ macropy3==1.1.0b2
 MarkupSafe==1.0
 numpy==1.14.5
 pandas==0.23.3
-Pillow==5.2.0
+Pillow==6.2.0
 pycparser==2.18
 pyecharts==0.5.5
 pyecharts-javascripthon==0.0.6
